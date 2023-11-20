@@ -33,29 +33,34 @@ public class CandidatoServiceImpl implements CandidatoService {
 
     @Override
     public Candidato updateCandidato(Integer idCandidato, Candidato candidatoAtualizado){
-            Candidato candidatoExistente = candidatoRepository.findById(idCandidato).orElse(null);
-            if (candidatoExistente != null){
-                candidatoExistente.setNomeCandidato(candidatoAtualizado.getNomeCandidato());
-                candidatoExistente.setCpfCandidato(candidatoAtualizado.getCpfCandidato());
-                candidatoExistente.setTelefoneCandidato(candidatoAtualizado.getTelefoneCandidato());
-                candidatoExistente.setEmail(candidatoAtualizado.getEmail());
+        Candidato candidatoExistente = candidatoRepository.findById(idCandidato).orElse(null);
+        if (candidatoExistente != null){
+            candidatoExistente.setNomeCandidato(candidatoAtualizado.getNomeCandidato());
+            candidatoExistente.setCpfCandidato(candidatoAtualizado.getCpfCandidato());
+            candidatoExistente.setTelefoneCandidato(candidatoAtualizado.getTelefoneCandidato());
+            candidatoExistente.setEmail(candidatoAtualizado.getEmail());
+
+            // Evita que a senha seja atualizada com valor em branco ou vazio
+            if (!candidatoAtualizado.getSenha().isBlank() && !candidatoAtualizado.getSenha().isEmpty()) {
                 candidatoExistente.setSenha(candidatoAtualizado.getSenha());
-                candidatoExistente.setTipoDeficienciaCandidato(candidatoAtualizado.getTipoDeficienciaCandidato());
-                candidatoExistente.setDescDeficienciaCandidato(candidatoAtualizado.getDescDeficienciaCandidato());
-                candidatoExistente.setFormacaoAcademicaCandidato(candidatoAtualizado.getFormacaoAcademicaCandidato());
-                candidatoExistente.setEnderecoCandidato(candidatoAtualizado.getEnderecoCandidato());
-                candidatoExistente.setNumeroResidenciaCandidato(candidatoAtualizado.getNumeroResidenciaCandidato());
-                candidatoExistente.setComplementoResidenciaCandidato(candidatoAtualizado.getComplementoResidenciaCandidato());
-                candidatoExistente.setBairroCandidato(candidatoAtualizado.getBairroCandidato());
-                candidatoExistente.setCidadeCandidato(candidatoAtualizado.getCidadeCandidato());
-                candidatoExistente.setEstadoCandidato(candidatoAtualizado.getEstadoCandidato());
-                return candidatoRepository.save(candidatoExistente);
-            } else {
-                throw new RuntimeException("Candidato " + idCandidato + " não encontrado!");
             }
 
-
+            candidatoExistente.setTipoDeficienciaCandidato(candidatoAtualizado.getTipoDeficienciaCandidato());
+            candidatoExistente.setDescDeficienciaCandidato(candidatoAtualizado.getDescDeficienciaCandidato());
+            candidatoExistente.setFormacaoAcademicaCandidato(candidatoAtualizado.getFormacaoAcademicaCandidato());
+            candidatoExistente.setEnderecoCandidato(candidatoAtualizado.getEnderecoCandidato());
+            candidatoExistente.setNumeroResidenciaCandidato(candidatoAtualizado.getNumeroResidenciaCandidato());
+            candidatoExistente.setComplementoResidenciaCandidato(candidatoAtualizado.getComplementoResidenciaCandidato());
+            candidatoExistente.setBairroCandidato(candidatoAtualizado.getBairroCandidato());
+            candidatoExistente.setCidadeCandidato(candidatoAtualizado.getCidadeCandidato());
+            candidatoExistente.setEstadoCandidato(candidatoAtualizado.getEstadoCandidato());
+            return candidatoRepository.save(candidatoExistente);
+        } else {
+            throw new RuntimeException("Candidato " + idCandidato + " não encontrado!");
+        }
     }
+
+
 
     @Override
     public void deleteCandidato(Integer idCandidato){

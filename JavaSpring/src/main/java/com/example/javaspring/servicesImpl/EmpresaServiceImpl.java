@@ -47,7 +47,12 @@ public class EmpresaServiceImpl implements EmpresaService {
             empresaExistente.setCnpjEmpresa(empresaAtualizada.getCnpjEmpresa());
             empresaExistente.setTelefoneEmpresa(empresaAtualizada.getTelefoneEmpresa());
             empresaExistente.setEmail(empresaAtualizada.getEmail());
-            empresaExistente.setSenha(empresaAtualizada.getSenha());
+
+            // Evita que a senha seja atualizada com valor em branco ou vazio
+            if (!empresaAtualizada.getSenha().isBlank() && !empresaAtualizada.getSenha().isEmpty()) {
+                empresaExistente.setSenha(empresaAtualizada.getSenha());
+            }
+
             empresaExistente.setSeguimentoEmpresa(empresaAtualizada.getSeguimentoEmpresa());
             empresaExistente.setDescSeguimentoEmpresa(empresaAtualizada.getDescSeguimentoEmpresa());
             empresaExistente.setEnderecoEmpresa(empresaAtualizada.getEnderecoEmpresa());
@@ -60,6 +65,7 @@ public class EmpresaServiceImpl implements EmpresaService {
         } else {
             throw new RuntimeException("Empresa " + idEmpresa + " não encontrado!");
         }
+
     }
 
     @Override
